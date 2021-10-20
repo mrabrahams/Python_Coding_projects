@@ -22,5 +22,58 @@ The module should :
     When the game is finished, the cards should be returned to the deck and prompt the user if they wish to play again.
 '''
 
+import random as rndm
+
+card_faces = ('Ace', 'Deuce', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Knight', 'Bishop', 'Dragon') # Tuple of faces
+
+card_suits = ('Diamonds', 'Hearts', 'Spades', 'Clubs', 'Fire', 'Ice') # Tuple of suits
+
+# Mapping points
+points = {
+        'Ace': 1,
+        'Deuce': 2,
+        '3': 3,
+        '4': 4,
+        '5': 5,
+        '6': 6,
+        '7': 7,
+        '8': 8,
+        '9': 9,
+        '10': 10,
+        'Jack': 10,
+        'Queen': 10,
+        'King': 10,
+        'Knight': 9,
+        'Bishop': 9,
+        'Dragon': 12,
+}
+
+
+def print_card(card): # Printing a card
+        print(f'{card[0]} of {card[1]}')
+
+def init_deck(): # Creating a deck
+        deck = []
+        for suit in card_suits:
+                for face in card_faces:
+                        deck.append((face, suit))
+        rndm.shuffle(deck) # Shuffling the deck
+        return deck
+
+def main():
+        deck = init_deck()
+        print("\n\nYour Hand")
+        hand = []
+        sum_points = 0
+        for i in range(7): # Dealing required number of cards
+                card = rndm.choice(deck)
+                deck.remove(card) # remove card fro deck after being dealt
+                print_card(card)
+                sum_points = sum_points + points[card[0]]  # Adding points
+        print(f"\nTotal Points: {sum_points}\n")
+        choice = input("Would you like to play again? (y/n): ") # Asking if user wants to play again
+        if choice.lower() == "y":
+            main()
+
 if __name__ == "__main__":
-    userInput()
+    main()
